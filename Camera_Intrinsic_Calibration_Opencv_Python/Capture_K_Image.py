@@ -2,15 +2,12 @@ import numpy as np
 import cv2
 import os
 
-
-
-
 dir_name = "./K_Img"
 if not os.path.exists(dir_name):
-    print "miss folder, regenerate it"
+    print ("miss folder, regenerate it")
     os.makedirs(dir_name)
 else:
-    print "folder exists"
+    print ("folder exists")
 
 
 CapCnt = cv2.VideoCapture()
@@ -21,16 +18,21 @@ while(True):
     else:
         CamCnt = CamCnt+1
        
-print str(CamCnt) + " camera detected"
+print (str(CamCnt) + " camera detected")
 CapCnt.release()
 
 while(True):
-    ID = input('camer index: ')
-    if (isinstance(ID,int)) and (ID < CamCnt) and (ID >= 0):
-        print "acceptable ID"
-        break
-    else:
-        print "unacceptable ID"
+    try:
+        ID = int(input('camer index: ')) # make sure ID is int type in both python 2.x and 3.x
+        if (ID < CamCnt) and (ID >= 0):
+            print ("acceptable ID")
+            break
+        else:
+            print ("unacceptable ID")
+    except:
+        print("please input a interger...")
+
+    
 
 print('start to use camera', ID)
 
@@ -47,11 +49,11 @@ while(True):
     PressKey = cv2.waitKey(10)
     PressKey = PressKey & 0xFF
     if PressKey == 27:  ## Esc
-        print "Quit"
+        print ("Quit")
         break
     elif (PressKey == ord('s')) or (PressKey == ord('S')):
         name = "./K_Img/K_Img_" + str(cnt) + ".png"
-        print name
+        print (name)
         cv2.imwrite(name, frame)
         cnt = cnt + 1
         
